@@ -18,13 +18,13 @@ class Tag
     #[ORM\Column(length: 40)]
     private ?string $label = null;
 
-    // #[ORM\ManyToMany(targetEntity: Publication::class, mappedBy: 'tag')]
-    // private Collection $publications;
+    #[ORM\ManyToMany(targetEntity: Publication::class, mappedBy: 'tag')]
+    private Collection $publications;
 
-    // public function __construct()
-    // {
-    //     $this->publications = new ArrayCollection();
-    // }
+    public function __construct()
+    {
+        $this->publications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,30 +43,30 @@ class Tag
         return $this;
     }
 
-    // /**
-    //  * @return Collection<int, Publication>
-    //  */
-    // public function getPublications(): Collection
-    // {
-    //     return $this->publications;
-    // }
+    /**
+     * @return Collection<int, Publication>
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
 
-    // public function addPublication(Publication $publication): self
-    // {
-    //     if (!$this->publications->contains($publication)) {
-    //         $this->publications->add($publication);
-    //         $publication->addTag($this);
-    //     }
+    public function addPublication(Publication $publication): self
+    {
+        if (!$this->publications->contains($publication)) {
+            $this->publications->add($publication);
+            $publication->addTag($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removePublication(Publication $publication): self
-    // {
-    //     if ($this->publications->removeElement($publication)) {
-    //         $publication->removeTag($this);
-    //     }
+    public function removePublication(Publication $publication): self
+    {
+        if ($this->publications->removeElement($publication)) {
+            $publication->removeTag($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 }

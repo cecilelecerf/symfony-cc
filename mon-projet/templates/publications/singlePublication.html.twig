@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Streemi - Publication {% endblock %}
+
+{% block content_layout %}
+    <section class="py-6 px-4 bg-gray-100 min-h-screen">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col px-2 gap-6">
+
+                {# Publication Detail #}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden p-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-3xl font-semibold text-gray-900">{{ publication.title }}</h2>
+                        <span class="text-gray-500 text-sm">{{ publication.createdAt|date('d M Y') }}</span>
+                    </div>
+                    <p class="mt-4 text-gray-600">{{ publication.content }}</p>
+                    <div class="flex justify-between">
+                    {# Affichage des tags sous forme de badges #}
+                        <div class="mt-4 flex flex gap-2">
+                            {% for tag in publication.getTag() %}
+                                <span class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full">{{ tag.label }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-4 flex items-center gap-5">
+                            <div class="mt-4 flex items-center gap-5">
+                                <!-- Bouton Like -->
+                                <div>
+                                    <span class="mr-1 text-sm">{{ likeCount }}</span>
+                                    <form action="{{ path('publications_single_publication', { 'id': publication.id }) }}" method="POST" class="inline">
+                                        <input type="hidden" name="type" value="LIKE">
+                                        <button type="submit">
+                                        {# {{isUserReaction.type}} #}
+                                            {% if isUserReaction and isUserReaction.type == reactionTypeLike %}
+                                                <i class="fas fa-thumbs-up text-blue-500"></i>
+                                            {% else %}
+                                                <i class="far fa-thumbs-up"></i>
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Bouton Dislike -->
+                                <div>
+                                    <span class="mr-1 text-sm">{{ dislikeCount }}</span>
+                                    <form action="{{ path('publications_single_publication', { 'id': publication.id }) }}" method="POST" class="inline">
+                                        <input type="hidden" name="type" value="DISLIKE">
+                                        <button type="submit">
+                                            {% if isUserReaction and isUserReaction.type == reactionTypeDislike %}
+                                                <i class="fas fa-thumbs-down text-red-500"></i>
+                                            {% else %}
+                                                <i class="far fa-thumbs-down"></i>
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                {# Affichage des commentaires #}
+                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-gray-900">Commentaires</h3>
+
+                    {% if publication.comments is not empty %}
+                        <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-x-14 gap-y-4 ">
+                            {% for comment in publication.comments %}
+                                <div class="border-b py-3">
+                                <div class="flex justify-between">
+                                    <p class="text-gray-700 font-semibold">{{ comment.user.username }}</p>
+                                    <p class="text-sm text-gray-500">{{ comment.createdAt|date('d M Y') }}</p>
+                                    </div>
+                                    <p class="mt-2 text-gray-600">{{ comment.content }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500 text-sm">Aucun commentaire pour cette publication.</p>
+                    {% endif %}
+                </div>
+
+                {# Formulaire pour ajouter un commentaire #}
+                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-gray-900">Ajouter un commentaire</h3>
+
+                    {{ form_start(commentForm) }}
+                        <div class="mt-4">
+                            {{ form_row(commentForm.content, { 'attr': {'class': 'w-full p-3 border rounded-md' }}) }}
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Ajouter le commentaire</button>
+                        </div>
+                    {{ form_end(commentForm) }}
+                </div>
+
+        
+            </div>
+        </div>
+    </section>
+{% endblock %}
