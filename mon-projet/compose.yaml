@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  # Symfony service
+  symfony:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: symfony_app
+    working_dir: /var/www/symfony
+    volumes:
+      - .:/var/www/symfony
+    networks:
+      - symfony_network
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=symfony
+      - MYSQL_USER=symfony_user
+      - MYSQL_PASSWORD=symfony_password
+    depends_on:
+      - mysql
+
+  # MySQL service
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: symfony
+      MYSQL_USER: symfony_user
+      MYSQL_PASSWORD: symfony_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - symfony_network
+    ports:
+      - "3306:3306"
+
+volumes:
+  ###< doctrine/doctrine-bundle ###
+  mysql_data:
+
+networks:
+  symfony_network:
+    driver: bridge
