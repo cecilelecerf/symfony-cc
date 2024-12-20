@@ -9,7 +9,6 @@ use App\Entity\Publication;
 use App\Entity\Reaction;
 use App\Entity\Tag;
 use App\Enum\ReactionTypeEnum;
-use App\Enum\UserAccountStatusEnum;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -35,6 +34,8 @@ class AppFixtures extends Fixture
 
         // for user test
         $user = $this->generateUser($manager);
+        $this->generateAdmin($manager);
+
         $manager->flush();
     }
 
@@ -53,7 +54,7 @@ class AppFixtures extends Fixture
             $user->setUsername($faker->firstname());
             $user->setEmail($faker->email());
             $user->setPassword($hashedPassword);
-            $user->setAccountStatus(UserAccountStatusEnum::ACTIVE);
+            // $user->setAccountStatus(UserAccountStatusEnum::ACTIVE);
             $user->setRoles(["ROLE_USER"]);
             $users[] = $user;
             $manager->persist($user);
@@ -154,11 +155,33 @@ class AppFixtures extends Fixture
         $user->setUsername("user");
         $user->setEmail("user@gmail.com");
         $user->setPassword($hashedPassword);
-        $user->setAccountStatus(UserAccountStatusEnum::ACTIVE);;
         $user->setRoles(["ROLE_USER"]);
 
         $manager->persist($user);
 
         return $user;
+    }
+
+    // -----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // --------------------------------ADMIN-----------------------------------
+    // -----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+
+    private function generateAdmin(ObjectManager $manager): void
+    {
+        $user = new User();
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $user,
+            "admin"
+        );
+        $user->setUsername("admin");
+        $user->setEmail("admin@gmail.com");
+        $user->setPassword($hashedPassword);
+        $user->setRoles(["ROLE_ADMIN"]);
+
+        $manager->persist($user);
     }
 }

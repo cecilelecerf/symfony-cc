@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Form\RegistrationFormType;
-use App\Enum\UserAccountStatusEnum;
 use App\Form\ResetForm;
 use App\Repository\UserRepository;
 use Symfony\Component\Uid\Uuid;
@@ -84,7 +83,6 @@ class AuthController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             $user->setRoles(["ROLE_USER"]);
-            $user->setAccountStatus(UserAccountStatusEnum::ACTIVE);
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->redirectToRoute('app_login');

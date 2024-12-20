@@ -1,9 +1,28 @@
 {% extends "base.html.twig" %}
-{% block title %}Streemi
+{% block title %}Reset de mot de passe
 {% endblock %}
-{% block content_layout %}
+{% block body %}
  
-	<section class="mt-9">
- <p>lalefrea</p>
-	</section>
-{% endblock %}
+                {{ form_start(resetForm) }}
+
+									<div class="relative">
+						 				{{ form_widget(resetForm.email, {'attr': {'class': 'w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'}}) }}
+										{{ form_errors(resetForm.email) }}
+									</div>
+									<div class="relative mt-4">
+                    {{ form_widget(resetForm.password) }}
+										{{ form_errors(resetForm.password) }}
+									</div>
+					 
+									<div class="flex items-center justify-center mt-8">
+                    {{form_widget(resetForm.submit, {"attr":{"class": "relative flex w-full bg-orange-600 flex-row p-3 items-center justify-center rounded-lg overflow-hidden border cursor-pointer transition text-white hover:opacity-90 hover:scale-105"}})}}
+									</div>
+
+									<div class="flex items-center justify-center mt-16">
+										<a href={{path("app_login") }} class="text-orange-600 cursor-pointer transition hover:text-orange-700 hover:scale-105">
+											Vous vous souvenez de votre mot de passe ? Connectez-vous
+										</a>
+									</div>
+                {{ form_end(resetForm) }}
+ 
+ {% endblock %}

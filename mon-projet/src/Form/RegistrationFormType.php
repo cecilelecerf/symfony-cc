@@ -45,7 +45,7 @@ class RegistrationFormType extends AbstractType
                 'second_options' => ['label' => false,  'attr' => ['placeholder' => 'Répetez le mot de passe', 'class' => 'w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white']],
 
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Register']);
+            ->add('submit', SubmitType::class, ['label' => false],);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

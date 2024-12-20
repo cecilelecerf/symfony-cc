@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 {% block title %}Streemi
 {% endblock %}
-{% block content_layout %}
+{% block body %}
 <div>
 
        {% if error %}
@@ -25,5 +25,16 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     </form>
+    			<div class="flex items-center justify-center mt-2">
+										<a href={{path("forgot") }} class="text-red-600 cursor-pointer transition hover:text-red-700 hover:scale-105">
+											Vous avez oubliez votre mot de passe ?
+										</a>
+									</div>
+    		<div class="flex items-center justify-center mt-16">
+										<a href={{path("app_register") }} class="text-orange-600 cursor-pointer transition hover:text-orange-700 hover:scale-105">
+
+											Pas de compte ? Inscrivez-vous
+										</a>
+									</div>
  </div>
 {% endblock %}

@@ -1,0 +1,33 @@
+{{ form_start(form, {'attr': {'class': 'space-y-4 max-w-lg mx-auto bg-gray-50 p-6 rounded-lg shadow-lg'}}) }}
+    <div class="form-group">
+        {{ form_label(form.username, null, {'attr': {'class': 'block text-lg font-medium text-gray-800'}}) }}
+        {{ form_widget(form.username, {'attr': {'class': 'block w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'}}) }}
+        {{ form_errors(form.username, {'attr': {'class': 'text-sm text-red-600'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.email, null, {'attr': {'class': 'block text-lg font-medium text-gray-800'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'block w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'}}) }}
+        {{ form_errors(form.email, {'attr': {'class': 'text-sm text-red-600'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.password, null, {'attr': {'class': 'block text-lg font-medium text-gray-800'}}) }}
+        {{ form_widget(form.password, {'attr': {'class': 'block w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'}}) }}
+        {{ form_errors(form.password, {'attr': {'class': 'text-sm text-red-600'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.roles, null, {'attr': {'class': 'block text-lg font-medium text-gray-800'}}) }}
+        {{ form_widget(form.roles, {'attr': {'class': 'block w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'}}) }}
+        {{ form_errors(form.roles, {'attr': {'class': 'text-sm text-red-600'}}) }}
+    </div>
+
+ 
+
+    <div class="mt-4">
+        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+{{ form_end(form) }}

@@ -30,41 +30,63 @@
                         <button id="menu-button" class="block md:hidden text-gray-700">
                             <i class="fas fa-bars"></i>
                         </button>
-
-                        <!-- Menu principal -->
+                        
                         <ul id="menu" class="hidden md:flex gap-6">
-                            <li>
-                                <a href="{{ path('index') }}"
-                                    class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'index' %}font-bold text-blue-600{% endif %}">
-                                    Accueil
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('publications_all_publications') }}"
-                                    class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'publications_all_publications' %}font-bold text-blue-600{% endif %}">
-                                    Publications
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('publications_new_publication') }}"
-                                    class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'publications_new_publication' %}font-bold text-blue-600{% endif %}">
-                                    Nouveau post
-                                </a>
-                            </li>
                             {% if app.user %}
-                            <li>
-                                <a href={{ path('app_logout') }}
-                                    class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'publications_new_publication' %}font-bold text-blue-600{% endif %}">
-Déconnexion                                </a>
-                            </li>
+                                <li>
+                                    <a href="{{ path('index') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'index' %}font-bold text-blue-600{% endif %}">
+                                        Accueil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('publications_all_publications') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'publications_all_publications' %}font-bold text-blue-600{% endif %}">
+                                        Publications
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('publications_new_publication') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'publications_new_publication' %}font-bold text-blue-600{% endif %}">
+                                        Nouveau post
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_logout') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'app_logout' %}font-bold text-blue-600{% endif %}">
+                                        Déconnexion
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('app_register') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'app_register' %}font-bold text-blue-600{% endif %}">
+                                        S'inscrire
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_login') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'app_login' %}font-bold text-blue-600{% endif %}">
+                                        Se connecter
+                                    </a>
+                                </li>
                             {% endif %}
+                       {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a href="{{ path('app_admin_index') }}"
+                                        class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'app_register' %}font-bold text-blue-600{% endif %}">
+                                        ADMIN
+                                    </a>
+                                </li>
+                                  {% endif %}
                         </ul>
+
                     </div>
                 </nav>
             </header>
 
             <!-- Contenu principal -->
-            {% block content_layout %}{% endblock %}
+            {% block body %}{% endblock %}
         </main>
 
     </div>

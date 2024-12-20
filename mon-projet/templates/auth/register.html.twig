@@ -1,9 +1,48 @@
 {% extends "base.html.twig" %}
 {% block title %}Streemi
 {% endblock %}
-{% block content_layout %}
+{% block body %}
  
 	<section class="mt-9">
- <p>lalefrea</p>
-	</section>
+ 									{{ form_start(registrationForm) }}
+
+
+									<div class="mb-3">
+										{{ form_widget(registrationForm.username, {'attr': {'class': 'w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'}}) }}
+										{{ form_errors(registrationForm.username) }}
+									</div>
+									<div class="mb-3">
+										{{ form_widget(registrationForm.email, {'attr': {'class': 'w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'}}) }}
+										{{ form_errors(registrationForm.email) }}
+
+									</div>
+
+
+									<div class="relative">
+
+										{{ form_widget(registrationForm.password) }}
+										{{ form_errors(registrationForm.password) }}
+ 
+									</div>
+ 
+
+									<div class="flex items-center justify-center !mt-8">
+										<button class="relative flex w-full bg-orange-600 flex-row p-3 items-center justify-center rounded-lg overflow-hidden border cursor-pointer transition text-white hover:opacity-90 hover:scale-105" type="submit">
+ 
+											S'inscrire
+										</button>
+									</div>
+
+									<div class="flex items-center justify-center mt-16">
+										<a href={{path("app_login") }} class="text-orange-600 cursor-pointer transition hover:text-orange-700 hover:scale-105">
+
+											Vous avez déjà un compte ? Connectez-vous
+										</a>
+									</div>
+									{{ form_end(registrationForm) }}
+
+
+ 	</section>
 {% endblock %}
+
+ 

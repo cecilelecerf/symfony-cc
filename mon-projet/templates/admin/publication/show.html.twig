@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publication{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 mt-8">
+    <h1 class="text-2xl font-bold text-center mb-6">Publication Details</h1>
+
+    <div class="overflow-hidden bg-white shadow rounded-lg border border-gray-200">
+        <table class="w-full table-auto">
+            <tbody class="divide-y divide-gray-200">
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">ID</th>
+                    <td class="px-6 py-4">{{ publication.id }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Title</th>
+                    <td class="px-6 py-4">{{ publication.title }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Content</th>
+                    <td class="px-6 py-4">{{ publication.content }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Created At</th>
+                    <td class="px-6 py-4">{{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Modified At</th>
+                    <td class="px-6 py-4">{{ publication.modifiedAt ? publication.modifiedAt|date('Y-m-d H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">User</th>
+                    <td class="px-6 py-4">{{ publication.user.username }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Tags</th>
+                    <td class="px-6 py-4">
+                        {% for tag in publication.tags %}
+                            <span class="inline-block bg-gray-200 text-gray-800 rounded-full py-1 px-3 text-sm">{{ tag.label }}</span>
+                        {% else %}
+                            No tags
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex space-x-4 justify-end">
+        <a href="{{ path('app_publication_index') }}" 
+           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            Back to List
+        </a>
+        <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" 
+           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Edit
+        </a>
+        {{ include('admin/publication/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

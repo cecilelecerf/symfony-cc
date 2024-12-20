@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 mt-8">
+    <h1 class="text-2xl font-bold text-center mb-6">User Details</h1>
+
+    <div class="overflow-hidden bg-white shadow rounded-lg border border-gray-200">
+        <table class="w-full table-auto">
+            <tbody class="divide-y divide-gray-200">
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">ID</th>
+                    <td class="px-6 py-4">{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Username</th>
+                    <td class="px-6 py-4">{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Email</th>
+                    <td class="px-6 py-4">{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Password</th>
+                    <td class="px-6 py-4">{{ user.password }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Roles</th>
+                    <td class="px-6 py-4">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 bg-gray-100 text-gray-600 text-left">Reset Password Token</th>
+                    <td class="px-6 py-4">{{ user.resetPasswordToken }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex space-x-4 justify-end">
+        <a href="{{ path('app_user_index') }}" 
+           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            Back to List
+        </a>
+        <a href="{{ path('app_user_edit', {'id': user.id}) }}" 
+           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Edit
+        </a>
+        {{ include('admin/user/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

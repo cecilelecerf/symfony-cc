@@ -31,9 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "json")]
     private array $roles = [];
 
-    #[ORM\Column(enumType: UserAccountStatusEnum::class)]
-    private UserAccountStatusEnum $accountStatus;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetPasswordToken = null;
 
@@ -130,17 +127,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAccountStatus(): UserAccountStatusEnum
-    {
-        return $this->accountStatus;
-    }
+    // public function getAccountStatus(): UserAccountStatusEnum
+    // {
+    //     return $this->accountStatus;
+    // }
 
-    public function setAccountStatus(UserAccountStatusEnum $accountStatus): self
-    {
-        $this->accountStatus = $accountStatus;
+    // public function setAccountStatus(UserAccountStatusEnum $accountStatus): self
+    // {
+    //     $this->accountStatus = $accountStatus;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 
     public function getResetPasswordToken(): ?string

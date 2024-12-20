@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tag Index{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 mt-8">
+    <h1 class="text-2xl font-bold text-center mb-6">Tag Index</h1>
+
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full border border-gray-300 shadow-md rounded-lg">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Label</th>
+                    <th class="px-4 py-2">Publications</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+            {% for tag in tags %}
+                <tr class="border-b hover:bg-gray-100">
+                    <td class="px-4 py-2 text-center">{{ tag.id }}</td>
+                    <td class="px-4 py-2">{{ tag.label }}</td>
+                    <td class="px-4 py-2">
+                        {% for publication in tag.publications %}
+                            <span class="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">{{ publication.id }}</span>
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2 text-center">
+                        <a href="{{ path('app_tag_show', {'id': tag.id}) }}" 
+                           class="text-blue-500 hover:text-blue-700 underline">Show</a>
+                        <a href="{{ path('app_tag_edit', {'id': tag.id}) }}" 
+                           class="ml-4 text-green-500 hover:text-green-700 underline">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="px-4 py-2 text-center text-gray-500">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex justify-end">
+        <a href="{{ path('app_tag_new') }}" 
+           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Create New
+        </a>
+    </div>
+</div>
+{% endblock %}
