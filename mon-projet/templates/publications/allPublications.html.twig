@@ -6,12 +6,18 @@
     <section class="py-6 px-4 bg-gray-100 ">
         <div class="max-w-7xl mx-auto">
         <div class="mb-6 flex gap-2 justify-center">
-        {% for tag in tags %}
-                                             <a href="{{ path('publications_all_publications', {'tag': tag.id}) }}" class="bg-orange-500 text-white text-xs font-semibold py-1 px-3 rounded-full transition transform hover:scale-105 hover:shadow-xl">
-            {{ tag.label }}
-        </a>
-
-        {% endfor %}
+                <a 
+                href="{{ path('publications_all_publications' ) }}" 
+                class="bg-orange-500 text-white text-xs font-semibold py-1 px-3 rounded-full transition transform hover:scale-105 hover:shadow-xl">
+                Default
+                </a>
+            {% for tag in tags %}
+                <a href="
+                {{ path('publications_all_publications', {'tag': tag.id}) }}" 
+                class="bg-orange-500 text-white text-xs font-semibold py-1 px-3 rounded-full transition transform hover:scale-105 hover:shadow-xl">
+                    {{ tag.label }}
+                </a>
+            {% endfor %}
         </div>
             <div  class="flex flex-col px-2 gap-6">
                 {% for publication in publications %}
@@ -25,7 +31,7 @@
                             
                             {# Affichage des tags sous forme de badges #}
                             <div class="mt-4 flex flex-wrap gap-2">
-                                {% for tag in publication.getTag() %}
+                                {% for tag in publication.getTags() %}
                                     <span class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full">{{ tag.label }}</span>
                        
                                 {% endfor %}

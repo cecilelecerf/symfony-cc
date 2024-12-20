@@ -45,6 +45,12 @@
                                     Publications
                                 </a>
                             </li>
+                                         <li>
+                                <a href="{{ path('publications_new_publication') }}"
+                                    class="text-gray-600 hover:text-blue-600 {% if app.request.attributes.get('_route') == 'publications_new_publication' %}font-bold text-blue-600{% endif %}">
+                                    Nouveau post
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </nav>

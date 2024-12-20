@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Streemi - Publication {% endblock %}
+
+{% block content_layout %}
+{# Formulaire pour ajouter une publication #}
+<div class="mt-8 bg-red p-6 rounded-lg shadow-md">
+    <h3 class="text-2xl font-semibold text-gray-900">Ajouter une publication</h3>
+
+    {{ form_start(publicationForm) }}
+        <div class="mt-4 w-3/4 mx-auto">
+       
+            {{ form_widget(publicationForm.title, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(publicationForm.title) }}
+        </div>
+
+        <div class="mt-4 w-3/4 mx-auto">
+            <label for="{{ publicationForm.content.vars.id }}" class="block text-sm font-medium text-gray-700">Contenu</label>
+            {{ form_widget(publicationForm.content, {
+                'attr': {
+                    'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(publicationForm.content) }}
+        </div>
+
+        <div class="mt-4 w-3/4 mx-auto">
+            <label for="{{ publicationForm.tags.vars.id }}" class="block text-sm font-medium text-gray-700">Tags</label>
+            {{ form_widget(publicationForm.tags, {
+                'attr': {
+                    'class': 'mt-1 flex gap-1'
+                }
+            }) }}
+            {{ form_errors(publicationForm.tags) }}
+        </div>
+
+        <div class="mt-6 w-3/4 mx-auto">
+            <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Ajouter la publication
+            </button>
+        </div>
+    {{ form_end(publicationForm) }}
+</div>
+{% endblock %}

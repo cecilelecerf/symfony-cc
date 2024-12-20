@@ -18,7 +18,7 @@ class Tag
     #[ORM\Column(length: 40)]
     private ?string $label = null;
 
-    #[ORM\ManyToMany(targetEntity: Publication::class, mappedBy: 'tag')]
+    #[ORM\ManyToMany(targetEntity: Publication::class, mappedBy: 'tags')]
     private Collection $publications;
 
     public function __construct()

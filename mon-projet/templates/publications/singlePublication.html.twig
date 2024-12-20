@@ -17,7 +17,7 @@
                     <div class="flex justify-between">
                     {# Affichage des tags sous forme de badges #}
                         <div class="mt-4 flex flex gap-2">
-                            {% for tag in publication.getTag() %}
+                            {% for tag in publication.getTags() %}
                                 <span class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full">{{ tag.label }}</span>
                             {% endfor %}
                         </div>
@@ -28,8 +28,7 @@
                                     <span class="mr-1 text-sm">{{ likeCount }}</span>
                                     <form action="{{ path('publications_single_publication', { 'id': publication.id }) }}" method="POST" class="inline">
                                         <input type="hidden" name="type" value="LIKE">
-                                        <button type="submit">
-                                        {# {{isUserReaction.type}} #}
+                                        <button type="submit"> 
                                             {% if isUserReaction and isUserReaction.type == reactionTypeLike %}
                                                 <i class="fas fa-thumbs-up text-blue-500"></i>
                                             {% else %}

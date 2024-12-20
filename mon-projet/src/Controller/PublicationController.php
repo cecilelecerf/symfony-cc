@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Publication;
 use App\Entity\Reaction;
 use App\Enum\ReactionTypeEnum;
 use App\Form\CommentType;
+use App\Form\PublicationType;
 use App\Repository\CommentRepository;
 use App\Repository\PublicationRepository;
 use App\Repository\ReactionRepository;
@@ -37,7 +39,7 @@ class PublicationController extends AbstractController
             $tag = $tagRepository->find($tagId);
             if ($tag) {
                 $query = $publicationRepository->createQueryBuilder('p')
-                    ->join('p.tag', 't')  // Jointure avec la table Tag
+                    ->join('p.tags', 't')  // Jointure avec la table Tag
                     ->where('t.id = :tagId')
                     ->setParameter('tagId', $tag->getId())  // Utilisation de l'ID du tag
                     ->orderBy('p.createdAt', 'DESC')
@@ -70,8 +72,6 @@ class PublicationController extends AbstractController
         $paginator->getQuery()
             ->setFirstResult($offset)
             ->setMaxResults($limit);
-
-        // Calculer le nombre total de pages
         $totalPages = ceil(count($paginator) / $limit);
 
         return $this->render("publications/allPublications.html.twig", [
@@ -83,7 +83,7 @@ class PublicationController extends AbstractController
     }
 
 
-    #[Route(path: '/{id}', name: 'single_publication')]
+    #[Route(path: '/{id}', name: 'single_publication', requirements: ['id' => '\d+']),]
     public function singlePublication(
         PublicationRepository $publicationRepository,
         ReactionRepository $reactionRepository,
@@ -158,7 +158,7 @@ class PublicationController extends AbstractController
             $this->addFlash('success', 'Votre commentaire a été ajouté.');
             return $this->redirectToRoute('publications_single_publication', ['id' => $id]);
         }
-        // var_dump($userReaction->getType() == ReactionTypeEnum::LIKE);
+
         return $this->render("publications/singlePublication.html.twig", [
             'publication' => $publication,
             'comments' => $comments,
@@ -168,6 +168,32 @@ class PublicationController extends AbstractController
             'commentForm' => $commentForm->createView(),
             'reactionTypeLike' => ReactionTypeEnum::LIKE,
             'reactionTypeDislike' => ReactionTypeEnum::DISLIKE,
+        ]);
+    }
+
+    #[Route(path: '/new', name: 'new_publication')]
+    public function newPublication(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $publication = new Publication();
+        $form = $this->createForm(PublicationType::class, $publication);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Gérer la date de création et de modification
+            $publication->setCreatedAt(new \DateTimeImmutable());
+            $publication->setModifiedAt(new \DateTimeImmutable());
+            $publication->setUser($security->getUser());
+
+            // Sauvegarder la publication en base de données 
+            $entityManager->persist($publication);
+            $entityManager->flush();
+
+            // Redirection ou message de succès
+            return $this->redirectToRoute('publications_all_publications');
+        }
+        return $this->render("publications/newPublication.html.twig", [
+            'publicationForm' => $form->createView(),
         ]);
     }
 }

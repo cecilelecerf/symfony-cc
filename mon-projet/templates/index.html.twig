@@ -16,7 +16,7 @@
                             
                             {# Affichage des tags sous forme de badges #}
                             <div class="mt-4 flex flex-wrap gap-2">
-                                {% for tag in publication.getTag() %}
+                                {% for tag in publication.getTags() %}
                                     <span class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full">{{ tag.label }}</span>
                                 {% endfor %}
                             </div>
